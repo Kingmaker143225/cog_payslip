@@ -1,3 +1,43 @@
+// import { NextResponse } from "next/server";
+// import { parseExcelFile } from "../../../lib/excel";
+
+// export async function POST(req) {
+//   try {
+//     const formData = await req.formData();
+//     const file = formData.get("file");
+
+//     if (!file) {
+//       return NextResponse.json(
+//         { error: "No file uploaded" },
+//         { status: 400 }
+//       );
+//     }
+
+//     const bytes = await file.arrayBuffer();
+//     const buffer = Buffer.from(bytes);
+
+//     const rows = await parseExcelFile(buffer);
+
+//     return NextResponse.json({ rows });
+//   } catch (error) {
+//     return NextResponse.json(
+//       { error: error.message || "Failed to parse Excel file" },
+//       { status: 500 }
+//     );
+//   }
+// }
+
+
+
+
+
+
+
+
+
+
+
+
 import { NextResponse } from "next/server";
 import { parseExcelFile } from "../../../lib/excel";
 
@@ -7,10 +47,7 @@ export async function POST(req) {
     const file = formData.get("file");
 
     if (!file) {
-      return NextResponse.json(
-        { error: "No file uploaded" },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: "No file uploaded" }, { status: 400 });
     }
 
     const bytes = await file.arrayBuffer();
@@ -18,8 +55,11 @@ export async function POST(req) {
 
     const rows = await parseExcelFile(buffer);
 
+    console.log("PARSED ROWS SAMPLE:", rows.slice(0, 2));
+
     return NextResponse.json({ rows });
   } catch (error) {
+    console.error("PARSE EXCEL ERROR:", error);
     return NextResponse.json(
       { error: error.message || "Failed to parse Excel file" },
       { status: 500 }
