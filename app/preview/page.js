@@ -233,7 +233,7 @@ export default function PreviewPage() {
     await waitForImages(input);
 
     const canvas = await html2canvas(input, {
-      scale: 2,
+      scale: 1.6,
       useCORS: true,
       backgroundColor: "#ffffff",
       logging: false,
