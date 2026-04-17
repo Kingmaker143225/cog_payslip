@@ -649,345 +649,346 @@
 
 
 
+
+
+
+
+
+
+
+
+
 "use client";
+import React from "react";
 
 export default function PayslipCard({ employee, elementId, onDownload }) {
-  const earnings = employee?.earnings || [];
-  const deductions = employee?.deductions || [];
+if (!employee) return <div>No Data</div>;
 
-  return (
-    <div className="mb-8">
-      <div className="flex justify-end mb-2">
-        <button
-          onClick={() =>
-            onDownload?.(elementId, employee.employeeId, employee.payMonth)
-          }
-          style={{
-            backgroundColor: "#2563eb",
-            color: "#ffffff",
-            padding: "8px 14px",
-            borderRadius: "8px",
-            border: "none",
-            cursor: "pointer",
-            fontWeight: 600,
-            fontSize: "14px",
-          }}
-        >
-          Download PDF
-        </button>
+const earnings = employee?.earnings || [];
+const deductions = employee?.deductions || [];
+
+return ( <div className="mb-10">
+
+  {/* Download Button */}
+  <div className="flex justify-end mb-3">
+    <button
+      onClick={() =>
+        onDownload?.(elementId, employee.employeeId, employee.payMonth)
+      }
+      style={{
+        backgroundColor: "#2563eb",
+        color: "#ffffff",
+        padding: "8px 12px",
+        borderRadius: "6px",
+        border: "none",
+        cursor: "pointer",
+        fontWeight: 600,
+        fontSize: "13px"
+      }}
+    >
+      Download PDF
+    </button>
+  </div>
+
+  {/* A4 Container */}
+  <div
+    id={elementId}
+    style={{
+      width: "794px",
+      minHeight: "1123px",
+      margin: "0 auto",
+      backgroundColor: "#ffffff",
+      padding: "20px",
+      boxSizing: "border-box",
+      fontFamily: "Arial, sans-serif",
+    }}
+  >
+
+    {/* Header */}
+    {/* <div style={{ marginBottom: "12px" }}>
+      <h2 style={{ margin: 0, fontSize: "22px", color: "#4f46e5" }}>
+        {employee.companyName}
+      </h2>
+      <p style={{ fontSize: "12px", margin: "4px 0" }}>
+        {employee.companyAddress}
+      </p>
+    </div> */}
+   {/* Header */}
+<div style={{
+  marginBottom: "20px",
+  paddingTop: "10px"
+}}>
+
+  {/* Top Row: Logo + Company Name */}
+  <div style={{
+    display: "flex",
+    alignItems: "center",
+    gap: "12px",
+    marginBottom: "6px"
+  }}>
+    
+    <img
+      src="/logo.jpeg"
+      alt="Company Logo"
+      style={{
+        height: "40px",
+        width: "40px",
+        objectFit: "contain"
+      }}
+      onError={(e) => {
+        e.currentTarget.style.display = "none";
+      }}
+    />
+
+    <h2 style={{
+      margin: 0,
+      fontSize: "20px",
+      color: "#4f46e5",
+      fontWeight: 700
+    }}>
+      {employee.companyName}
+    </h2>
+
+  </div>
+
+  {/* Address */}
+  <p style={{
+    margin: "0",
+    fontSize: "12px",
+    color: "#555"
+  }}>
+    {employee.companyAddress}
+  </p>
+
+  {/* Divider Line */}
+  <div style={{
+    marginTop: "10px",
+    borderBottom: "1px solid #e5e7eb"
+  }} />
+
+</div>
+
+
+
+{/* Payslip Title */}
+<h3 style={{
+  textAlign: "center",
+  fontSize: "16px",
+  fontWeight: 600,
+  margin: "14px 0 12px 0",
+  color: "#111827"
+}}>
+  Payslip for the month of {employee.payMonth}
+</h3>
+
+    {/* Employee Details Table */}
+    {/* <div
+      style={{
+        display: "grid",
+        gridTemplateColumns: "140px 1fr",
+        border: "1px solid #ccc",
+        fontSize: "12px",
+        marginBottom: "12px",
+      }}
+    >
+      {[
+        ["Name", employee.employeeName],
+        ["Employee No", employee.employeeId],
+        ["Joining Date", employee.doj],
+        ["Designation", employee.designation],
+        ["Department", employee.department],
+        ["Paid Days", employee.paidDays],
+        ["LOP", employee.lop],
+        ["Bank Name", employee.bankName],
+        ["Account No", employee.bankAccount],
+        ["PAN", employee.pan],
+        ["PF No", employee.pfNo],
+        ["UAN", employee.pfUan],
+      ].map(([label, value], i) => (
+        <React.Fragment key={i}>
+          <div style={{
+            padding: "4px 6px",
+            borderBottom: "1px solid #eee",
+            fontWeight: 600
+          }}>
+            {label}
+          </div>
+          <div style={{
+            padding: "4px 6px",
+            borderBottom: "1px solid #eee",
+            whiteSpace: "nowrap",
+            overflow: "hidden",
+            textOverflow: "ellipsis"
+          }}>
+            {value || "-"}
+          </div>
+        </React.Fragment>
+      ))}
+    </div> */}
+
+    {/* Employee Details - 2 Columns */}
+<div style={{
+  display: "grid",
+  gridTemplateColumns: "1fr 1fr",
+  border: "1px solid #ccc",
+  fontSize: "12px",
+  marginBottom: "12px"
+}}>
+
+  {[
+    ["Name", employee.employeeName],
+    ["Employee No", employee.employeeId],
+    ["Joining Date", employee.doj],
+    ["Designation", employee.designation],
+    ["Department", employee.department],
+    ["Paid Days", employee.paidDays],
+    ["LOP", employee.lop],
+    ["Bank Name", employee.bankName],
+    ["Account No", employee.bankAccount],
+    ["PAN", employee.pan],
+    ["PF No", employee.pfNo],
+    ["UAN", employee.pfUan],
+  ].map(([label, value], i) => (
+    <div key={i} style={{
+      display: "flex",
+      justifyContent: "space-between",
+      padding: "4px 8px",
+      borderBottom: "1px solid #eee",
+      borderRight: i % 2 === 0 ? "1px solid #eee" : "none"
+    }}>
+      <span style={{ fontWeight: 600 }}>{label}</span>
+      <span style={{
+        marginLeft: "10px",
+        whiteSpace: "nowrap",
+        overflow: "hidden",
+        textOverflow: "ellipsis"
+      }}>
+        {value || "-"}
+      </span>
+    </div>
+  ))}
+
+</div>
+
+    {/* Earnings & Deductions */}
+    <div style={{
+      display: "grid",
+      gridTemplateColumns: "1fr 1fr",
+      gap: "10px",
+      marginBottom: "12px"
+    }}>
+
+      {/* Earnings */}
+      <div style={{ border: "1px solid #ccc", fontSize: "12px" }}>
+        <div style={{
+          display: "grid",
+          gridTemplateColumns: "1fr 100px",
+          background: "#f3f4f6",
+          padding: "6px 8px",
+          fontWeight: 700
+        }}>
+          <span>Earnings</span>
+          <span style={{ textAlign: "right" }}>Amount</span>
+        </div>
+
+        {earnings.map((item, i) => (
+          <div key={i} style={{
+            display: "grid",
+            gridTemplateColumns: "1fr 100px",
+            padding: "4px 8px",
+            borderTop: "1px solid #eee"
+          }}>
+            <span>{item.label}</span>
+            <span style={{ textAlign: "right" }}>
+              ₹ {Number(item.amount || 0).toFixed(2)}
+            </span>
+          </div>
+        ))}
       </div>
 
-      <div
-        id={elementId}
-        style={{
-          backgroundColor: "#ffffff",
-          maxWidth: "850px",
-          margin: "0 auto",
-          borderRadius: "12px",
-          boxShadow: "0 6px 16px rgba(0,0,0,0.06)",
-          padding: "20px",
-          border: "1px solid #d1d5db",
-          color: "#111827",
-        }}
-      >
-        {/* Header */}
-        <div
-          style={{
-            border: "1px solid #d1d5db",
-            borderRadius: "12px",
-            padding: "12px 16px",
-            marginBottom: "12px",
-          }}
-        >
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              gap: "16px",
-            }}
-          >
-            <div>
-              <h2
-                style={{
-                  fontSize: "24px",
-                  fontWeight: 800,
-                  margin: 0,
-                  color: "#4f46e5",
-                  lineHeight: 1.1,
-                }}
-              >
-                {employee.companyName}
-              </h2>
-
-              <p
-                style={{
-                  fontSize: "13px",
-                  color: "#374151",
-                  marginTop: "6px",
-                  marginBottom: 0,
-                  lineHeight: 1.5,
-                }}
-              >
-                {employee.companyAddress}
-              </p>
-            </div>
-
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "8px",
-                flexShrink: 0,
-              }}
-            >
-              <img
-                src="/logo.jpeg"
-                alt="Company Logo"
-                style={{
-                  height: "44px",
-                  width: "auto",
-                  objectFit: "contain",
-                }}
-                onError={(e) => {
-                  e.currentTarget.style.display = "none";
-                }}
-              />
-              <span
-                style={{
-                  fontSize: "15px",
-                  fontWeight: 700,
-                  color: "#6d28d9",
-                }}
-              >
-                {employee.companyName}
-              </span>
-            </div>
-          </div>
+      {/* Deductions */}
+      <div style={{ border: "1px solid #ccc", fontSize: "12px" }}>
+        <div style={{
+          display: "grid",
+          gridTemplateColumns: "1fr 100px",
+          background: "#fee2e2",
+          padding: "6px 8px",
+          fontWeight: 700
+        }}>
+          <span>Deductions</span>
+          <span style={{ textAlign: "right" }}>Amount</span>
         </div>
 
-        {/* Title */}
-        <h3
-          style={{
-            textAlign: "center",
-            fontWeight: 700,
-            fontSize: "18px",
-            marginTop: 0,
-            marginBottom: "14px",
-            color: "#111827",
-          }}
-        >
-          Payslip for the month of {employee.payMonth}
-        </h3>
-
-        {/* Employee details */}
-        <div
-          style={{
+        {deductions.map((item, i) => (
+          <div key={i} style={{
             display: "grid",
-            gridTemplateColumns: "1fr 1fr",
-            border: "1px solid #9ca3af",
-            borderRadius: "10px",
-            overflow: "hidden",
-            marginBottom: "14px",
-            fontSize: "12px",
-          }}
-        >
-          {[
-            ["Name", employee.employeeName],
-            ["Employee No", employee.employeeId],
-            ["Joining Date", employee.doj],
-            ["Designation", employee.designation],
-            ["Department", employee.department],
-            ["Effective Work Days", employee.paidDays],
-            ["LOP", employee.lop],
-            ["Bank Name", employee.bankName],
-            ["Bank Account No", employee.bankAccount],
-            ["PAN Number", employee.pan],
-            ["PF No", employee.pfNo],
-            ["PF UAN", employee.pfUan],
-          ].map(([label, value], index) => (
-            <div
-              key={index}
-              style={{
-                padding: "8px 10px",
-                borderRight: index % 2 === 0 ? "1px solid #d1d5db" : "none",
-                borderBottom: index < 10 ? "1px solid #d1d5db" : "none",
-                lineHeight: 1.35,
-              }}
-            >
-              <strong>{label}:</strong> {value}
-            </div>
-          ))}
-        </div>
-
-        {/* Earnings + Deductions */}
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr",
-            gap: "12px",
-            marginBottom: "14px",
-          }}
-        >
-          <div
-            style={{
-              border: "1px solid #9ca3af",
-              borderRadius: "10px",
-              overflow: "hidden",
-            }}
-          >
-            <div
-              style={{
-                backgroundColor: "#eff6ff",
-                color: "#1d4ed8",
-                fontWeight: 700,
-                display: "flex",
-                justifyContent: "space-between",
-                padding: "8px 10px",
-                borderBottom: "1px solid #d1d5db",
-                fontSize: "13px",
-              }}
-            >
-              <span>Earnings</span>
-              <span>Amount</span>
-            </div>
-
-            {earnings.map((item, index) => (
-              <div
-                key={index}
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  padding: "7px 10px",
-                  borderBottom:
-                    index === earnings.length - 1 ? "none" : "1px solid #e5e7eb",
-                  fontSize: "12px",
-                  lineHeight: 1.3,
-                }}
-              >
-                <span>{item.label}</span>
-                <span>{Number(item.amount || 0).toFixed(2)}</span>
-              </div>
-            ))}
+            gridTemplateColumns: "1fr 100px",
+            padding: "4px 8px",
+            borderTop: "1px solid #eee"
+          }}>
+            <span>{item.label}</span>
+            <span style={{ textAlign: "right" }}>
+              ₹ {Number(item.amount || 0).toFixed(2)}
+            </span>
           </div>
+        ))}
+      </div>
 
-          <div
-            style={{
-              border: "1px solid #9ca3af",
-              borderRadius: "10px",
-              overflow: "hidden",
-            }}
-          >
-            <div
-              style={{
-                backgroundColor: "#fef2f2",
-                color: "#b91c1c",
-                fontWeight: 700,
-                display: "flex",
-                justifyContent: "space-between",
-                padding: "8px 10px",
-                borderBottom: "1px solid #d1d5db",
-                fontSize: "13px",
-              }}
-            >
-              <span>Deductions</span>
-              <span>Amount</span>
-            </div>
+    </div>
 
-            {deductions.map((item, index) => (
-              <div
-                key={index}
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  padding: "7px 10px",
-                  borderBottom:
-                    index === deductions.length - 1 ? "none" : "1px solid #e5e7eb",
-                  fontSize: "12px",
-                  lineHeight: 1.3,
-                }}
-              >
-                <span>{item.label}</span>
-                <span>{Number(item.amount || 0).toFixed(2)}</span>
-              </div>
-            ))}
-          </div>
-        </div>
+    {/* Summary */}
+    <div style={{ border: "1px solid #ccc", fontSize: "13px" }}>
+      
+      <div style={{
+        display: "flex",
+        justifyContent: "space-between",
+        padding: "4px 8px"
+      }}>
+        <span>Total Earnings</span>
+        <span>₹ {employee.totalEarnings}</span>
+      </div>
 
-        {/* Totals */}
-        <div
-          style={{
-            border: "1px solid #9ca3af",
-            borderRadius: "10px",
-            padding: "10px 12px",
-          }}
-        >
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              padding: "6px 0",
-              borderBottom: "1px solid #d1d5db",
-              fontSize: "12px",
-            }}
-          >
-            <span style={{ fontWeight: 600 }}>Total Earnings</span>
-            <span>{Number(employee.totalEarnings || 0).toFixed(2)}</span>
-          </div>
+      <div style={{
+        display: "flex",
+        justifyContent: "space-between",
+        padding: "4px 8px"
+      }}>
+        <span>Total Deductions</span>
+        <span>₹ {employee.totalDeductions}</span>
+      </div>
 
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              padding: "6px 0",
-              borderBottom: "1px solid #d1d5db",
-              fontSize: "12px",
-            }}
-          >
-            <span style={{ fontWeight: 600 }}>Total Deductions</span>
-            <span>{Number(employee.totalDeductions || 0).toFixed(2)}</span>
-          </div>
+      <div style={{
+        display: "flex",
+        justifyContent: "space-between",
+        padding: "6px 8px",
+        fontWeight: 700,
+        fontSize: "18px",
+        color: "green"
+      }}>
+        <span>Net Pay</span>
+        <span>₹ {employee.netPay}</span>
+      </div>
 
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              paddingTop: "10px",
-              fontSize: "22px",
-              fontWeight: 700,
-              color: "#16a34a",
-              lineHeight: 1.2,
-            }}
-          >
-            <span>Net Pay</span>
-            <span>{Number(employee.netPay || 0).toFixed(2)}</span>
-          </div>
-
-          <div
-            style={{
-              marginTop: "6px",
-              fontSize: "12px",
-              color: "#374151",
-              fontStyle: "italic",
-              lineHeight: 1.35,
-            }}
-          >
-            ({employee.netPayWords})
-          </div>
-        </div>
-
-        {/* Footer */}
-        <div
-          style={{
-            marginTop: "12px",
-            fontSize: "11px",
-            color: "#4b5563",
-            lineHeight: 1.4,
-          }}
-        >
-          This is a system generated payslip and does not require signature.
-        </div>
+      <div style={{
+        fontSize: "12px",
+        padding: "4px 8px",
+        fontStyle: "italic"
+      }}>
+        (Rupees {employee.netPayWords})
       </div>
     </div>
-  );
+
+    {/* Footer */}
+    <div style={{
+      marginTop: "10px",
+      fontSize: "11px",
+      color: "#555"
+    }}>
+      This is a system generated payslip and does not require signature.
+    </div>
+
+  </div>
+</div>
+
+);
 }
